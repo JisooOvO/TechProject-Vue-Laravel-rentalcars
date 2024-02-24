@@ -26,26 +26,26 @@
             <div class="flex gap-10 justify-between items-center">
                 <div class="grow">
                     <div class="sm:text-xl flex justify-between whitespace-nowrap">
-                        <p class="text-red-500 font-bold">잔여 재고</p>
-                        <p class="text-red-500 font-bold">{{ car.available_quantity }}대</p>
-                    </div>
-                    <div class="sm:text-xl flex justify-between whitespace-nowrap">
-                        <p class="text-blue-500 font-bold">렌탈 비용</p>
+                        <p class="text-blue-500 font-bold">1일 렌탈 비용</p>
                         <p class="text-blue-500 font-bold">{{ formattedRentalFee }}원</p>
                     </div>
                 </div>
-                <button class="w-44 h-16 text-white font-bold border bg-blue-500 rounded-md shadow-md">예약 정보 확인</button>
+                <div class="w-44 h-16">
+                    <button-component title="예약 정보 확인"/>
+                </div>
             </div>
         </div>
     </li>
 </template>
 
 <script>
+import ButtonComponent from './ButtonComponent.vue';
+
 export default {
-    props : {
-        car : {
-            type : Object,
-            default : () => ({}),
+    props: {
+        car: {
+            type: Object,
+            default: () => ({}),
         }
     },
     computed: {
@@ -58,5 +58,6 @@ export default {
             this.$emit("button-clicked");
         }
     },
+    components: { ButtonComponent }
 }
 </script>

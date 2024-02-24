@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full mb-4 flex flex-col justify-center">
+    <div class="w-full flex flex-col justify-center">
         <label :for="name" class="block mb-3">{{ title }}</label>
         <textarea :id="name" :type="type" :name="name" :placeholder="placeholder"
             :style="{height: height + 'rem' }"

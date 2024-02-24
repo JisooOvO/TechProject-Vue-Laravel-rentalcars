@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Car;
 use App\Models\Reservation;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 
 
 class CarController extends Controller
@@ -24,6 +25,8 @@ class CarController extends Controller
 
     public function store(Request $request)
     {
+        DB::beginTransaction();
+
         try {
             $modelName = $request -> input('model_name');
             
@@ -34,8 +37,21 @@ class CarController extends Controller
                 Storage::delete($filePath);
             }
             $newCar = Car::updateOrCreate(['model_name' => $request->model_name], $request->all());
+
+            $availableQuantity = Car::where(['model_name' => $request->model_name]) -> value('available_quantity');
+            $totalQuantity = Car::where(['model_name' => $request->model_name]) -> value('total_quantity');
+            $requestTotalQuantity = $request -> total_quantity;
+
+            $totalAvailableQuantity = $requestTotalQuantity + $availableQuantity;
+            
+            Car::where(['model_name' => $request->model_name]) -> update(['available_quantity' => $totalAvailableQuantity]);
+            Car::where(['model_name' => $request->model_name]) -> update(['total_quantity' => $totalQuantity + $requestTotalQuantity]);
+
+            DB::commit();
+
             return response()->json(["status" => "ok"]);
         } catch(\Exception $e){
+            DB::rollback();
             return response()->json(["status" => "fail to update / create car information", "error" => $e->getMessage()]); 
         }
     }
@@ -70,6 +86,22 @@ class CarController extends Controller
     {
         $car = Car::with(['brand', 'fuel', 'type','reservation']) -> find($id);
 
+        if($car == null) {
+            return Inertia::render('errors/error');
+        }
+
         return Inertia::render('cars/show', ['car' => $car]);
     }
-}
+
+    public function reservation(Request $request)
+    {
+        $id = $request -> query('id');
+        $car = Car::with(['brand', 'fuel', 'type','reservation']) -> find($id);
+
+        if($car == null) {
+            return Inertia::render('errors/error');
+        }
+
+        return Inertia::render('cars/reservation', ['car' => $car]);
+    }
+}   

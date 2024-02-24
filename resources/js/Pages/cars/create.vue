@@ -1,9 +1,9 @@
 <template>
-    <div class="w-[80%] max-w-[80rem] p-4 sm:p-8 mx-auto border rounded-md shadow-md xl:flex gap-4">
+    <div class="w-full max-w-[80rem] p-4 sm:p-8 mx-auto border rounded-md shadow-md xl:flex gap-4">
         <div class="w-full xl:grow p-4 bg-slate-200 border rounded-md shadow-md">
             <h2 class="text-xl text-center my-4">기존 차량 정보 불러오기</h2>
             <hr class="my-4"/>
-            <div class="h-[20rem] xl:h-[115rem] bg-white overflow-auto border p-4 shadow-inner">
+            <div class="h-[20rem] xl:h-[118rem] bg-white overflow-auto border p-4 rounded-md shadow-inner">
                 <ul id="car-list"></ul>
             </div>
         </div>
@@ -27,13 +27,20 @@
             <input-component name="age_limit" type="number" title="최소 운전 허용 나이" placeholder="21"/>
             <input-component name="experience_limit" type="number" title="최소 운전 경력" placeholder="1"/>
             <input-component name="rental_fee" type="number" title="렌트 비용" placeholder="285000"/>
-            <input-component name="total_quantity" type="number" title="차량 대 수" placeholder="1"/>
-            <button type="submit" class="w-full h-20 mt-8 text-white text-xl font-bold tracking-widest bg-blue-400 rounded-md shadow-md hover:opacity-80">등록하기</button>
+            <input-component name="total_quantity" type="number" title="차량 대수" placeholder="1"/>
+            <div class="text-[80%] text-red-500">
+                <p>등록시 모델 명이 일치하면 차량 정보가 갱신됩니다.</p>
+                <p>단, 차량 대수는 해당 값만큼 더해집니다.</p>
+            </div>
+            <div class="w-full h-20 my-8">
+                <ButtonComponent title="등록하기" type="submit"/>
+            </div>
         </form>
     </div>
 </template>
 
 <script>
+import ButtonComponent from '../../components/ButtonComponent.vue';
 import ExistingCarComponent from '../../components/ExistingCarComponent.vue';
 import InputComponent from '../../components/InputComponent.vue';
 import InputImageComponent from "../../components/InputImageComponent.vue";
@@ -43,8 +50,9 @@ import { createApp } from "vue";
 
 export default {
     components: {
-        InputComponent, SelectComponent, TextareaComponent, InputImageComponent,
-    },
+    InputComponent, SelectComponent, TextareaComponent, InputImageComponent,
+    ButtonComponent
+},
     mounted() {
 
         // add car list
@@ -114,6 +122,8 @@ export default {
             const data = Object.fromEntries(new FormData(target).entries());
             const csrf_token = document.head.querySelector('meta[name="csrf-token"]').content;
 
+            console.log(data);
+
             if(img.src === "http://127.0.0.1:8000/create") {
                 alert("이미지는 필수 사항입니다.");
                 return;
@@ -138,8 +148,7 @@ export default {
                         .then(res => res.json())
                         .then(path => {
                             data.image_path = `/images/${path.image_path}`;
-                            // 잔여재고 계산
-                            // data.available_quantity = data.total_quantity;
+                            data.image_name = data.name + ' 사진';
                             fetch('/cars', {
                                 method : 'post',
                                 headers : {
