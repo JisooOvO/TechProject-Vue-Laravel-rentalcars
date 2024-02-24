@@ -3,7 +3,7 @@
   <hr class="mt-3 mb-10"/>
   <ul>
     <li v-for="car in cars" :key="car.id">
-      <carlist-component @button-clicked="handleListClick(car.id)" :car="car"/>
+      <carlist-component @button-clicked="handleListClick(car.id, car.available_quantity)" :car="car"/>
     </li>
   </ul>
 </template>
@@ -14,6 +14,11 @@ export default {
   components : {
     CarlistComponent,
   },
+  data(){
+    return {
+      isAvailable : null,
+    }
+  },
   props: {
     cars: {
       type: Array,
@@ -21,7 +26,8 @@ export default {
     },
   },
   methods: {
-    handleListClick(id) {
+    handleListClick(id,available_quantity) {
+      if(available_quantity <= 0) return;
       window.location.href = `/show/${id}`
     }
   },

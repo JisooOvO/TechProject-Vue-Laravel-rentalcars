@@ -92,7 +92,7 @@ return new class extends Migration
             'rental_fee' => '114500',
             'option' => '에어백, 열선시트, 후방카메라, 스마트 키, 선루프',
             'total_quantity' => '1',
-            'available_quantity' => '1',
+            'available_quantity' => '0',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

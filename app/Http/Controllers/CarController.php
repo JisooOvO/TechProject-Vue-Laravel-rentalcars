@@ -87,7 +87,11 @@ class CarController extends Controller
         $car = Car::with(['brand', 'fuel', 'type','reservation']) -> find($id);
 
         if($car == null) {
-            return Inertia::render('errors/error');
+            return Inertia::render('errors/notFound');
+        }
+
+        if($car -> available_quantity <= 0 ){
+            return Inertia::render('errors/notAvailable');
         }
 
         return Inertia::render('cars/show', ['car' => $car]);
@@ -99,7 +103,11 @@ class CarController extends Controller
         $car = Car::with(['brand', 'fuel', 'type','reservation']) -> find($id);
 
         if($car == null) {
-            return Inertia::render('errors/error');
+            return Inertia::render('errors/notFound');
+        }
+
+        if($car -> available_quantity <= 0 ){
+            return Inertia::render('errors/notAvailable');
         }
 
         return Inertia::render('cars/reservation', ['car' => $car]);

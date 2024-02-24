@@ -87,6 +87,17 @@ return new class extends Migration
             'updated_at' => now(),
         ]);
 
+        DB::table('reservations') -> insert([
+            'user_id' => '6',
+            'car_id' => '3',
+            'start_at' => '2024-02-15',
+            'end_at' => '2024-03-16',
+            'reservation_status' => 'used',
+            'rental_fee' => "3435000",
+            "additional_information" => "서울 여행",
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
     }
 

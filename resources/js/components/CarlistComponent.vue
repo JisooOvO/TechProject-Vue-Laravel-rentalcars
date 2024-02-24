@@ -1,21 +1,21 @@
 <template>
-    <li @click="handleClick" class="w-full min-h-12 p-4 mb-4 border rounded-md shadow-md sm:flex sm:gap-4 hover:cursor-pointer hover:opacity-80">
+    <li @click="handleClick" :class="getListStlye">
         <div class="sm:w-[30%] mb-3 sm:mb-0">
             <img :src="`/storage${car.image_path}`" :alt="car.image_name" 
             class="w-full h-full object-fill min-h-40"/>
         </div>
         <div class="grow">
             <p class="text-xl mb-3 whitespace-nowrap">{{ car.name }}</p>
-            <div class="flex gap-2 text-sm text-gray-500 mb-2">
+            <div class="flex gap-2 text-sm text-gray-700 mb-2">
                 <p class="whitespace-nowrap">{{ car.model_name }}</p>
             </div>
-            <div class="flex gap-2 text-sm text-gray-500 mb-2">
+            <div class="flex gap-2 text-sm text-gray-700 mb-2">
                 <p class="whitespace-nowrap">{{ car.year }}년</p>
                 <p class="whitespace-nowrap">{{ car.seater }}인승</p>
                 <p class="whitespace-nowrap">{{ car.age_limit }}세 이상</p>
                 <p class="whitespace-nowrap">{{ car.experience_limit }}년 이상</p>
             </div>
-            <div class="flex gap-2 text-sm text-gray-500 mb-3">
+            <div class="flex gap-2 text-sm text-gray-700 mb-3">
                 <p>{{ car.brand.name }}</p>
                 <p>{{ car.type.name }}</p>
                 <p>{{ car.fuel.name }}</p>
@@ -31,7 +31,8 @@
                     </div>
                 </div>
                 <div class="w-44 h-16">
-                    <button-component title="예약 정보 확인"/>
+                    <button-component v-if="isAvailable" title="예약 정보 확인"/>
+                    <button-component v-else title="예약 마감" color="bg-red-500"/>
                 </div>
             </div>
         </div>
@@ -51,6 +52,15 @@ export default {
     computed: {
         formattedRentalFee() {
             return this.car.rental_fee.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        },
+        getListStlye() {
+            return {
+                "w-full min-h-12 p-4 mb-4 border rounded-md shadow-md sm:flex sm:gap-4 hover:cursor-pointer hover:bg-[rgba(0,0,0,0.1)]" : this.car.available_quantity > 0,
+                "w-full min-h-12 p-4 mb-4 border rounded-md shadow-md sm:flex sm:gap-4 pointer-events-none bg-[rgba(0,0,0,0.3)]" : this.car.available_quantity <= 0,
+            }
+        },
+        isAvailable(){
+            return this.car.available_quantity > 0;
         }
     },
     methods: {
@@ -58,6 +68,6 @@ export default {
             this.$emit("button-clicked");
         }
     },
-    components: { ButtonComponent }
+    components: { ButtonComponent },
 }
 </script>

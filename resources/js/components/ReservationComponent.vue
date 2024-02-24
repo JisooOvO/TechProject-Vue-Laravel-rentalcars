@@ -1,4 +1,5 @@
 <template>
+    <td :class="getStatusClass">{{ reservation.user_id }}</td>
     <td :class="getStatusClass">{{ reservation.start_at }}</td>
     <td :class="getStatusClass">{{ reservation.end_at }}</td>
     <td :class="getStatusClass">{{ formattedRentalFee }}</td>

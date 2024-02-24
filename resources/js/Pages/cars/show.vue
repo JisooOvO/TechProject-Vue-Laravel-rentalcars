@@ -62,9 +62,10 @@
                     <p>{{ availableCarNumber }} 대</p>
                 </div>
             </div>
-            <table class="w-full">
+            <table class="w-full text-sm sm:text-base">
                 <thead>
                     <tr class="h-12">
+                        <th class="border font-normal">유저 ID</th>
                         <th class="border font-normal">시작 일자</th>
                         <th class="border font-normal">종료 일자</th>
                         <th class="border font-normal">총 렌탈 비용</th>
