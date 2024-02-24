@@ -60,6 +60,8 @@ export default {
                     };
 
                     reader.readAsDataURL(selectedFile);
+                }else {
+                    alert("확장자는 jpg, jpeg, png 를 허용합니다.");
                 }
             }
         }

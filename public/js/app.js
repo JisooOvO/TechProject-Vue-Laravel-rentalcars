@@ -19071,6 +19071,8 @@ __webpack_require__.r(__webpack_exports__);
             img.src = e.target.result;
           };
           reader.readAsDataURL(selectedFile);
+        } else {
+          alert("확장자는 jpg, jpeg, png 를 허용합니다.");
         }
       }
     }
