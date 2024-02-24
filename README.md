@@ -1,64 +1,63 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Tech Project AMUZ Rental Web Service
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> 아뮤즈 기술 과제 라라벨 ORM을 이용한 렌트카 예약 시스템 관련 프로젝트 저장소입니다.
 
-## About Laravel
+-   개발 기간 : `2024.02.20 ~ 2024.02.27`
+-   개발 목적 : `라라벨 프레임 워크 및 Tailwind Inertia Vue 이용하여 웹 페이지 구성`
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   개발 환경
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+    -   vscode
+    -   laravel ^9.0
+    -   php ^8.0
+    -   inertiajs/vue3
+    -   vue3
+    -   tailwindcss
+    -   flatpickr
+    -   mysql
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   실행 방법
 
-## Learning Laravel
+    1. vscode, mysql 설치
+    2. 새폴더 생성 및 해당 위치에서 vscode 실행 후 TEMINAL 실행
+    3. `git clone https://github.com/JisooOvO/TechProject-Vue-Laravel-rentalcars.git`
+    4. `cd TechProject-Vue-Laravel-rentalcars` 또는 해당 파일에서 vscode 실행 후 TEMINAL 실행
+    5. `npm install`
+    6. `composer install`
+    7. `php artisan storage:link`
+    8. `.env.example` 파일 이름 `.env` 로 변경 후 mysql connection 관련 설정( password 등 )
+    9. `php artisan migrate` -> `would you like to create it` 에서 `y` 입력
+    10. `php artisan key:generate`
+    11. `php artisan serve` 명령어 입력 후
+    12. `http://127.0.0.1:8000/` 로 접속
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   예약 기능 설명
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    -   현재 사용 중인 차량 수와 전체 차량 수가 일치하면 예약 마감으로 설정했습니다.
+    -   사용자의 취소 등의 경우를 고려하여 사용 중이 아닌 예약 정보는 예약 가능한 차량 수에 영향을 미치지 않습니다.
+        -   (미구현) 예약 확정 기능 추가를 고려할 수 있습니다.
+    -   예약 당일에 예약 상태가 변경되며 예약 마감일을 지날 경우 연체 상태로 변경됩니다.
+        -   (미구현) 취소 및 반납 기능 추가를 고려할 수 있습니다.
 
-## Laravel Sponsors
+-   페이지 설명
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+    -   list page
+        -   등록된 차량 및 예약 가능 여부 확인
+    -   create page
+        -   신규 차량 등록 기능 구현
+        -   기존 차량 정보를 불러 올 수 있는 기능 구현
+            -   모델 명을 기준으로 차량 구분
+            -   모델 명이 같은 차량 등록시 업데이트 처리
+            -   단, 이미 예약된 정보에 영향이 가지 않게 차량 대수는 기존 값에서 더해집니다.
+    -   show page
+        -   list page 에서 클릭한 차량의 예약 정보 확인
+        -   해당 차량이 예약 마감 상태일 경우 접근 불가
+    -   reservation page
+        -   show page 에서 예약 버튼 클릭시 예약 서비스 기능 제공
+        -   예약 시작일, 마감일 지정 가능
+            -   예약 가능한 차량 수가 더 많을 경우에는 Dimmed 처리 X (모닝)
+            -   예약 가능한 차량 수보다 해당 차량의 예약 정보 수가 같거나 많을 경우 중복 불가능한 날짜를 Dimmed 처리(아반떼)
+        -   해당 차량이 예약 마감 상태일 경우 접근 불가 (BMW)
 
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+-   TODO
+    -   [ ] 예약 시간 추가
