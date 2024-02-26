@@ -1,12 +1,12 @@
 <template>
-    <div class="w-full max-w-[80rem] p-4 sm:p-8 mx-auto border rounded-md shadow-md xl:flex gap-4">
-        <div class="w-full xl:grow p-4 bg-slate-200 border rounded-md shadow-md">
+    <article class="w-full max-w-[80rem] p-4 sm:p-8 mx-auto border rounded-md shadow-md xl:flex gap-4">
+        <section class="w-full xl:grow p-4 bg-slate-200 border rounded-md shadow-md">
             <h2 class="text-xl text-center my-4">기존 차량 정보 불러오기</h2>
             <hr class="my-4"/>
             <div class="h-[20rem] xl:h-[118rem] bg-white overflow-auto border p-4 rounded-md shadow-inner">
                 <ul id="car-list"></ul>
             </div>
-        </div>
+        </section>
         <form id="car-enroll-form" class="w-full xl:grow p-4">
             <h2 class="text-xl text-center my-4">신규 차량 등록</h2>
             <hr class="my-4"/>
@@ -36,7 +36,7 @@
                 <ButtonComponent title="등록하기" type="submit"/>
             </div>
         </form>
-    </div>
+    </article>
 </template>
 
 <script>
@@ -121,8 +121,6 @@ export default {
             const img = document.querySelector("#img");
             const data = Object.fromEntries(new FormData(target).entries());
             const csrf_token = document.head.querySelector('meta[name="csrf-token"]').content;
-
-            console.log(data);
 
             if(img.src === "http://127.0.0.1:8000/create") {
                 alert("이미지는 필수 사항입니다.");

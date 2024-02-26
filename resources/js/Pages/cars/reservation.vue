@@ -64,7 +64,10 @@ export default{
             return this.car.reservation
             .filter(reservation => reservation.reservation_status === 'reserved')
             .map(reservation => {
-                return { from : reservation.start_at, to : reservation.end_at } 
+                return { 
+                    from : new Date(reservation.start_at).toISOString().slice(0,10), 
+                    to : new Date(reservation.end_at).toISOString().slice(0,10), 
+                } 
             });
         },
         getRentalFee(){

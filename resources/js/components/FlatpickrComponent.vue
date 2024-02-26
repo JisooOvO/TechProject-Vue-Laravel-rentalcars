@@ -50,7 +50,8 @@ export default {
             const todayString = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate() + 1}`;
 
             flatpickr(this.$refs.flatpickrInput1, {    
-                dateFormat: 'Y-m-d',
+                dateFormat: 'Y-m-d H:i:S',
+                enableTime: true,
                 minDate: todayString,
                 locale: "ko",
                 disable : this.disabledDates,
@@ -60,7 +61,8 @@ export default {
             });
 
             flatpickr(this.$refs.flatpickrInput2, {    
-                dateFormat: 'Y-m-d',
+                dateFormat: 'Y-m-d H:i:S',
+                enableTime: true,
                 locale: "ko",
                 minDate: this.startDate || todayString,
                 disable : this.disabledDates,
@@ -72,30 +74,30 @@ export default {
 
         updateFlatpickrInput1MaxDate() {
             const today = new Date();
-            const todayString = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate() + 1}`;
+            const todayString = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate() + 1} 00:00:00`;
 
             const targetDate = new Date(this.endDate);
-            targetDate.setDate(targetDate.getDate()-1)
+            targetDate.setDate(targetDate.getDate())
 
             this.$refs.flatpickrInput1._flatpickr.set('maxDate', targetDate || todayString);
         },
 
         updateFlatpickrInput2MinDate() {
             const today = new Date();
-            const todayString = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate() + 1}`;
+            const todayString = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate() + 1} 00:00:00`;
 
             const targetDate = new Date(this.startDate);
-            targetDate.setDate(targetDate.getDate()+1)
+            targetDate.setDate(targetDate.getDate())
 
             this.$refs.flatpickrInput2._flatpickr.set('minDate', targetDate || todayString);
         },
 
         emitStart(){
-            this.$emit('emit-startDate',this.startDate)
+            this.$emit('emit-startDate',this.startDate);
         },
 
         emitEnd(){
-            this.$emit('emit-endDate',this.endDate)
+            this.$emit('emit-endDate',this.endDate);
         }
     },
 };

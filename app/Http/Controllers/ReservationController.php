@@ -16,8 +16,7 @@ class ReservationController extends Controller
         DB::beginTransaction();
         
         try{
-            $today = Carbon::now() -> setTimezone('Asia/Seoul') -> toDateString();
-
+            $today = Carbon::now() -> setTimezone('Asia/Seoul') -> toDateTimeString();
             
             $usedReservations = Reservation::where('start_at', '<=' ,$today) 
                 -> where('reservation_status', 'reserved')

@@ -37,7 +37,7 @@ export default {
     .then(data => {
       if(data.status === "fail") alert("데이터 처리 중 에러가 발생했습니다.");
     })
-    .catch(() => alert("데이터 처리 중 에러가 발생했습니다."));
+    .catch(console.log);
   }
 };
 </script>

@@ -18497,7 +18497,6 @@ __webpack_require__.r(__webpack_exports__);
       var img = document.querySelector("#img");
       var data = Object.fromEntries(new FormData(target).entries());
       var csrf_token = document.head.querySelector('meta[name="csrf-token"]').content;
-      console.log(data);
       if (img.src === "http://127.0.0.1:8000/create") {
         alert("이미지는 필수 사항입니다.");
         return;
@@ -18585,9 +18584,7 @@ __webpack_require__.r(__webpack_exports__);
       return res.json();
     }).then(function (data) {
       if (data.status === "fail") alert("데이터 처리 중 에러가 발생했습니다.");
-    })["catch"](function () {
-      return alert("데이터 처리 중 에러가 발생했습니다.");
-    });
+    })["catch"](console.log);
   }
 });
 
@@ -18641,8 +18638,8 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         return reservation.reservation_status === 'reserved';
       }).map(function (reservation) {
         return {
-          from: reservation.start_at,
-          to: reservation.end_at
+          from: new Date(reservation.start_at).toISOString().slice(0, 10),
+          to: new Date(reservation.end_at).toISOString().slice(0, 10)
         };
       });
     },
@@ -18984,7 +18981,8 @@ __webpack_require__.r(__webpack_exports__);
       var today = new Date();
       var todayString = "".concat(today.getFullYear(), "-").concat(today.getMonth() + 1, "-").concat(today.getDate() + 1);
       (0,flatpickr__WEBPACK_IMPORTED_MODULE_0__["default"])(this.$refs.flatpickrInput1, {
-        dateFormat: 'Y-m-d',
+        dateFormat: 'Y-m-d H:i:S',
+        enableTime: true,
         minDate: todayString,
         locale: "ko",
         disable: this.disabledDates,
@@ -18993,7 +18991,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
       (0,flatpickr__WEBPACK_IMPORTED_MODULE_0__["default"])(this.$refs.flatpickrInput2, {
-        dateFormat: 'Y-m-d',
+        dateFormat: 'Y-m-d H:i:S',
+        enableTime: true,
         locale: "ko",
         minDate: this.startDate || todayString,
         disable: this.disabledDates,
@@ -19004,16 +19003,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateFlatpickrInput1MaxDate: function updateFlatpickrInput1MaxDate() {
       var today = new Date();
-      var todayString = "".concat(today.getFullYear(), "-").concat(today.getMonth() + 1, "-").concat(today.getDate() + 1);
+      var todayString = "".concat(today.getFullYear(), "-").concat(today.getMonth() + 1, "-").concat(today.getDate() + 1, " 00:00:00");
       var targetDate = new Date(this.endDate);
-      targetDate.setDate(targetDate.getDate() - 1);
+      targetDate.setDate(targetDate.getDate());
       this.$refs.flatpickrInput1._flatpickr.set('maxDate', targetDate || todayString);
     },
     updateFlatpickrInput2MinDate: function updateFlatpickrInput2MinDate() {
       var today = new Date();
-      var todayString = "".concat(today.getFullYear(), "-").concat(today.getMonth() + 1, "-").concat(today.getDate() + 1);
+      var todayString = "".concat(today.getFullYear(), "-").concat(today.getMonth() + 1, "-").concat(today.getDate() + 1, " 00:00:00");
       var targetDate = new Date(this.startDate);
-      targetDate.setDate(targetDate.getDate() + 1);
+      targetDate.setDate(targetDate.getDate());
       this.$refs.flatpickrInput2._flatpickr.set('minDate', targetDate || todayString);
     },
     emitStart: function emitStart() {
@@ -19257,7 +19256,7 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "w-full max-w-[80rem] p-4 sm:p-8 mx-auto border rounded-md shadow-md xl:flex gap-4"
 };
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"w-full xl:grow p-4 bg-slate-200 border rounded-md shadow-md\"><h2 class=\"text-xl text-center my-4\">기존 차량 정보 불러오기</h2><hr class=\"my-4\"><div class=\"h-[20rem] xl:h-[118rem] bg-white overflow-auto border p-4 rounded-md shadow-inner\"><ul id=\"car-list\"></ul></div></div>", 1);
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<section class=\"w-full xl:grow p-4 bg-slate-200 border rounded-md shadow-md\"><h2 class=\"text-xl text-center my-4\">기존 차량 정보 불러오기</h2><hr class=\"my-4\"><div class=\"h-[20rem] xl:h-[118rem] bg-white overflow-auto border p-4 rounded-md shadow-inner\"><ul id=\"car-list\"></ul></div></section>", 1);
 var _hoisted_3 = {
   id: "car-enroll-form",
   "class": "w-full xl:grow p-4"
@@ -19275,7 +19274,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_SelectComponent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SelectComponent");
   var _component_textarea_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("textarea-component");
   var _component_ButtonComponent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ButtonComponent");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_input_image_component, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("article", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_input_image_component, {
     name: "image_path",
     title: "이미지"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_input_component, {
